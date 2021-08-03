@@ -140,7 +140,7 @@ jobs:
       - run:
           name: Publishing Expo app
           command: |
-            expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+            expo login -u flutterdemo -p flutterdemo69 --non-interactive
             yarn
             expo publish
       - save_yarn_cache:
