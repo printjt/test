@@ -23,7 +23,7 @@ executors:
     #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      EXPO_SDK_VERSION: 39.0.0
+      EXPO_SDK_VERSION: 42.0.0
       TURTLE_VERSION: 0.21.9
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
