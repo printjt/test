@@ -84,34 +84,12 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
+      - build_android_apk:
           filters:
             branches:
               only: master
-      - build_android_apk:
-          requires:
-            - publish_app
 
 jobs:
-  publish_app:
-    executor: js
-    steps:
-      - checkout
-      - add_yarn_binaries_to_path
-      - restore_yarn_cache:
-          platform: linux
-      - run:
-          name: Installing expo-cli
-          command: yarn global add expo-cli
-      - run:
-          name: Publishing Expo app
-          command: |
-            expo login -u flutterdemo -p flutterdemo69 --non-interactive
-            yarn
-            expo publish
-      - save_yarn_cache:
-          platform: linux
-
   build_android_apk:
     executor: android
     steps:
