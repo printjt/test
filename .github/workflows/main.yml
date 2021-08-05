@@ -48,4 +48,10 @@ jobs:
         run: turtle setup:android --sdk-version 42.0.0
         
       - name: Build app with turtle
-        run: turtle build:android -u flutterdemo -p flutterdemo69 --type apk
+        run: turtle build:android -u flutterdemo -p flutterdemo69 --type apk -o ~/expo-project.apk
+        
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-without-markdown
+          path: ~/expo-project.apk
