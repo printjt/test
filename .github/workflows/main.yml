@@ -48,4 +48,4 @@ jobs:
         run: turtle setup:android --sdk-version 42.0.0
         
       - name: Build app with turtle
-        run: turtle build:android -u flutterdemo -p flutterdemo69 --type apk --sdk-version 42.0.0
+        run: turtle build:android -u flutterdemo -p flutterdemo69 --type apk
