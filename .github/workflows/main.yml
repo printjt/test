@@ -35,5 +35,5 @@ jobs:
         
       - name: Publishing Expo app
         run: |
-            expo login -u flutterdemo -p flutterdemo69 --non-interactive,
+            expo login -u flutterdemo -p flutterdemo69,
             expo publish
