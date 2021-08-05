@@ -35,3 +35,6 @@ jobs:
         
       - name: Publishing Expo app
         run: expo login -u flutterdemo -p flutterdemo69
+        
+      - name: Installing gulp and turtle cli
+        run: yarn global add gulp-cli turtle-cli
