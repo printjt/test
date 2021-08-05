@@ -39,6 +39,9 @@ jobs:
       - name: Installing gulp and turtle cli
         run: yarn global add gulp-cli turtle-cli
         
+      - name: Installing Java 8
+        run: sudo apt-get install openjdk-8-jdk
+        
       - name: Setup turtle
         run: turtle setup:android --sdk-version 42.0.0
         
