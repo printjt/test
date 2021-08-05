@@ -38,3 +38,5 @@ jobs:
         
       - name: Installing gulp and turtle cli
         run: yarn global add gulp-cli turtle-cli
+      - name: Build app with turtle
+        run: turtle build:android -u flutterdemo -p flutterdemo69 --type apk
