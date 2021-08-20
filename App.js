@@ -1,6 +1,7 @@
 import React from "react";
 import Dashboard from "./Screens/DashBoard";
 import HomeScreen from "./Screens/Main";
+import VerifyScreen from "./Screens/VerifyScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -15,7 +16,7 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{
-            title: "Welpie Dashboard",
+            title: "Articles",
             headerStyle: {
               backgroundColor: "#17172c",
             },
@@ -23,6 +24,7 @@ export default function App() {
               fontWeight: "bold",
               color: "white",
             },
+            headerTintColor: "white",
           }}
         />
         <Stack.Screen
@@ -37,6 +39,21 @@ export default function App() {
               fontWeight: "bold",
               color: "white",
             },
+          }}
+        />
+        <Stack.Screen
+          name="Verify"
+          component={VerifyScreen}
+          options={{
+            title: "Verify user",
+            headerStyle: {
+              backgroundColor: "#17172c",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "white",
+            },
+            headerTintColor: "white",
           }}
         />
       </Stack.Navigator>

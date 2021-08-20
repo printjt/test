@@ -39,8 +39,13 @@ export default function Dashboard({ navigation }) {
   const [articleSize, setArticleSize] = useState(0);
   const [tagCar, setTagCar] = useState(0);
   const [tagAnimal, setTagAnimal] = useState(0);
+  const [tagFashion, setTagFashion] = useState(0);
+  const [tagPerfume, setTagPerfume] = useState(0);
+  const [tagKitchen, setTagKitchen] = useState(0);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [numComments, setNumComments] = useState(0);
+  const [numLikes, setNumLikes] = useState(0);
 
   useEffect(() => {
     //userLoad();
@@ -102,6 +107,14 @@ export default function Dashboard({ navigation }) {
         });
 
         setArticleSize(Ausers.length);
+        var comments = 0;
+        var likes = 0;
+        for (var x = 0; x < Ausers.length; x++) {
+          comments += Number(Ausers[x].commentsNum);
+          likes += Number(Ausers[x].likes);
+        }
+        setNumComments(comments);
+        setNumLikes(likes);
       });
     const ArticleTagCars = db
       .collection("Articles")
@@ -133,6 +146,52 @@ export default function Dashboard({ navigation }) {
 
         setTagAnimal(Ausers.length);
       });
+    const ArticleTagFashion = db
+      .collection("Articles")
+      .where("tag", "==", "fashion")
+      .onSnapshot((querySnapshot) => {
+        const Ausers = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          Ausers.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setTagFashion(Ausers.length);
+      });
+    const ArticleTagKitchen = db
+      .collection("Articles")
+      .where("tag", "==", "kitchen")
+      .onSnapshot((querySnapshot) => {
+        const Ausers = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          Ausers.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setTagKitchen(Ausers.length);
+      });
+    const ArticleTagPerfume = db
+      .collection("Articles")
+      .where("tag", "==", "perfume")
+      .onSnapshot((querySnapshot) => {
+        const Ausers = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          Ausers.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setTagPerfume(Ausers.length);
+      });
+
     return () => subscriber();
   }, []);
 
@@ -159,15 +218,6 @@ export default function Dashboard({ navigation }) {
   return (
     <ScrollView style={{ height: "100%" }}>
       <View style={styles.container}>
-        {/*<View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={styles.title}>Welpie Dashboard</Text>
-        </View>*/}
-
         <View
           style={{
             flexDirection: "row",
@@ -176,7 +226,17 @@ export default function Dashboard({ navigation }) {
           }}
         >
           <Card title="Normal users" usersize={userSize} />
-          <Card title="Business users" usersize={adminSize} />
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate("Verify")}
+          >
+            <Text style={{ color: "#8D8E98", fontSize: 18 }}>
+              Business users
+            </Text>
+            <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
+              {adminSize}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
@@ -197,9 +257,9 @@ export default function Dashboard({ navigation }) {
             style={styles.card}
             onPress={() => navigation.navigate("Home")}
           >
-            <Text style={{ color: "#8D8E98", fontSize: 18 }}>Hello</Text>
+            <Text style={{ color: "#8D8E98", fontSize: 18 }}>Articles</Text>
             <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
-              Hello
+              {articleSize}
             </Text>
           </TouchableOpacity>
 
@@ -212,8 +272,8 @@ export default function Dashboard({ navigation }) {
             marginTop: 10,
           }}
         >
-          <Card title="Comments" usersize="1589" />
-          <Card title="Likes" usersize="98218" />
+          <Card title="Comments" usersize={numComments} />
+          <Card title="Likes" usersize={numLikes} />
         </View>
         <View
           style={{
@@ -232,6 +292,24 @@ export default function Dashboard({ navigation }) {
         >
           <Card title="Cars" usersize={tagCar} />
           <Card title="Animals" usersize={tagAnimal} />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Card title="Fashion" usersize={tagFashion} />
+          <Card title="Kitchen" usersize={tagKitchen} />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Card title="Perfume" usersize={tagPerfume} />
+          <Card title="N/A" usersize="N/A" />
         </View>
       </View>
     </ScrollView>
