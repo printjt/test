@@ -54,23 +54,25 @@ export default function VerifyScreen({ navigation }) {
   function Item({ items }) {
     return (
       <View style={styles.article}>
-        <Text style={{ color: "white" }}>
-          {`${items.name}    isVerified: ${items.verified}`}
-        </Text>
-        <Text style={{ color: "white" }}></Text>
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => setVerify(items.uid, true)}>
-            <Icons
-              name="check"
-              color="green"
-              size={20}
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setVerify(items.uid, false)}>
-            <Icons name="close" color="red" size={20} />
-          </TouchableOpacity>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ color: "white" }}>
+            {`${items.name}    isVerified: ${items.verified}`}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity onPress={() => setVerify(items.uid, true)}>
+              <Icons
+                name="check"
+                color="green"
+                size={20}
+                style={{ marginRight: 10 }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setVerify(items.uid, false)}>
+              <Icons name="close" color="red" size={20} />
+            </TouchableOpacity>
+          </View>
         </View>
+        <Text style={{ color: "grey" }}>{items.email}</Text>
       </View>
     );
   }
@@ -131,8 +133,6 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     padding: 10,
     marginTop: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
   header: {
     flexDirection: "row",

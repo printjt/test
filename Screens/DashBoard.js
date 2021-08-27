@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import { Bar } from "react-native-progress";
 
 const { height, width } = Dimensions.get("window");
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -210,13 +211,15 @@ export default function Dashboard({ navigation }) {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={{ color: "white" }}>{items.name}</Text>
-        <Text style={{ color: "white" }}>{items.access}</Text>
+        <Text style={{ color: "white" }}>
+          {items.access == "user" ? "Regular" : "Business"}
+        </Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={{ height: "100%" }}>
+    <ScrollView style={{ height: "100%", backgroundColor: "#090C21" }}>
       <View style={styles.container}>
         <View
           style={{
@@ -225,7 +228,7 @@ export default function Dashboard({ navigation }) {
             marginTop: 20,
           }}
         >
-          <Card title="Normal users" usersize={userSize} />
+          <Card title="Regular users" usersize={userSize} />
           <TouchableOpacity
             style={styles.card}
             onPress={() => navigation.navigate("Verify")}
@@ -262,8 +265,61 @@ export default function Dashboard({ navigation }) {
               {articleSize}
             </Text>
           </TouchableOpacity>
-
-          <Card title="Users" usersize={userSize + adminSize} />
+          <View style={styles.card}>
+            <Text style={{ color: "#8D8E98", fontSize: 18 }}>Users</Text>
+            <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
+              {userSize + adminSize}
+            </Text>
+            <View style={{ marginBottom: 10 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "blueviolet",
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                  }}
+                />
+                <Text style={{ color: "white" }}>Regular</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <View
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: "indigo",
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                  }}
+                />
+                <Text style={{ color: "white" }}>Business</Text>
+              </View>
+            </View>
+            <Bar
+              progress={
+                userSize == 0
+                  ? 0
+                  : userSize / parseInt(`${userSize + adminSize}`)
+              }
+              width={100}
+              color="blueviolet"
+              unfilledColor="indigo"
+              borderColor="black"
+            />
+          </View>
         </View>
         <View
           style={{
