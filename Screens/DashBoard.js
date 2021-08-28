@@ -226,6 +226,8 @@ export default function Dashboard({ navigation }) {
     );
   }
 
+
+
   return (
     <ScrollView style={{ height: "100%", backgroundColor: "#090C21" }}>
       <View style={styles.container}>
@@ -239,9 +241,7 @@ export default function Dashboard({ navigation }) {
           <Card title="Regular users" usersize={userSize} />
           <TouchableOpacity
             style={styles.card}
-            // onPress={() => navigation.navigate("Verify")}
-            onPress={async () => alert((await Notifications.getExpoPushTokenAsync()).data)}
-
+            onPress={() => navigation.navigate("Verify")}
           >
             <Text style={{ color: "#8D8E98", fontSize: 18 }}>
               Business users

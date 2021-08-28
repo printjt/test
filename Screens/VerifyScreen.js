@@ -45,10 +45,24 @@ export default function VerifyScreen({ navigation }) {
     return () => subscriber();
   }, []);
 
-  function setVerify(uid, state) {
+  function setVerify(uid, state, token) {
     db.collection("test_users").doc(uid).update({ verified: state });
-    console.log(typeof uid);
-    console.log(uid);
+    sendNoti(token)
+  }
+
+  function sendNoti(token) {
+    let response = fetch("https://exp.host/--/api/v2/push/send", {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: token,
+        title: "Verification",
+        body: "Your account has been verified"
+      })
+    })
   }
 
   function Item({ items }) {
@@ -59,7 +73,7 @@ export default function VerifyScreen({ navigation }) {
             {`${items.name}    isVerified: ${items.verified}`}
           </Text>
           <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity onPress={() => setVerify(items.uid, true)}>
+            <TouchableOpacity onPress={() => setVerify(items.uid, true, items.token)}>
               <Icons
                 name="check"
                 color="green"
