@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "./Screens/DashBoard";
 import HomeScreen from "./Screens/Main";
 import VerifyScreen from "./Screens/VerifyScreen";
@@ -9,6 +9,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as auth from "expo-local-authentication";
 import * as Updates from "expo-updates";
+import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications'
 import Toast from "react-native-root-toast";
 import { RootSiblingParent } from "react-native-root-siblings";
 import * as Network from "expo-network";
@@ -55,7 +57,12 @@ async function checkUpdate() {
 }
 
 export default function App() {
-  authenticate();
+  //authenticate();
+  const [token, setToken] = useState("")
+
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: "#090C21" }}>
       <NavigationContainer>
@@ -107,59 +114,63 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </View>
-  );
-
-  function DrawerApp() {
-    return (
-      <Drawer.Navigator drawerContent={() => <DrawerContent />}>
-        <Drawer.Screen
-          name="Dash"
-          component={Dashboard}
-          options={{
-            title: "Welpie Dashboard",
-            headerStyle: {
-              backgroundColor: "#17172c",
-            },
-            headerTitleStyle: {
-              fontWeight: "bold",
-              color: "white",
-            },
-          }}
-        />
-      </Drawer.Navigator>
-    );
-  }
-
-  function DrawerContent() {
-    return (
-      <RootSiblingParent>
-        <View
-          style={{
-            backgroundColor: "#090C21",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              position: "absolute",
-              width: "75%",
-              borderRadius: 10,
-              height: 40,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#1D1E33",
-              bottom: 50,
-            }}
-            onPress={() => checkUpdate()}
-          >
-            <Text style={{ color: "white" }}>Check for update</Text>
-          </TouchableOpacity>
-          <Text style={{ color: "grey", position: "absolute", bottom: 25 }}>
-            {Updates.manifest.version}
-          </Text>
-        </View>
-      </RootSiblingParent>
-    );
-  }
+  )
 }
+
+function DrawerApp() {
+  return (
+    <Drawer.Navigator drawerContent={() => <DrawerContent />}>
+      <Drawer.Screen
+        name="Dash"
+        component={Dashboard}
+        options={{
+          title: "Welpie Dashboard",
+          headerStyle: {
+            backgroundColor: "#17172c",
+          },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "white",
+          },
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+function DrawerContent() {
+  return (
+    <RootSiblingParent>
+      <View
+        style={{
+          backgroundColor: "#090C21",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            width: "75%",
+            borderRadius: 10,
+            height: 40,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#1D1E33",
+            bottom: 50,
+          }}
+          onPress={() => checkUpdate()}
+        >
+          <Text style={{ color: "white" }}>Check for update</Text>
+        </TouchableOpacity>
+        <Text style={{ color: "grey", position: "absolute", bottom: 25 }}>
+          {Updates.manifest.version}
+        </Text>
+        <Text style={{ color: "grey", position: "absolute", top: 50 }}>
+          hello
+        </Text>
+      </View>
+    </RootSiblingParent>
+  );
+}
+

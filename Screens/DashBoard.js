@@ -14,7 +14,9 @@ import {
 } from "react-native";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import * as Notifications from 'expo-notifications'
 import { Bar } from "react-native-progress";
+
 
 const { height, width } = Dimensions.get("window");
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -193,8 +195,14 @@ export default function Dashboard({ navigation }) {
         setTagPerfume(Ausers.length);
       });
 
+
+
+
     return () => subscriber();
   }, []);
+
+
+
 
   function Card({ title, usersize }) {
     return (
@@ -231,7 +239,9 @@ export default function Dashboard({ navigation }) {
           <Card title="Regular users" usersize={userSize} />
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("Verify")}
+            // onPress={() => navigation.navigate("Verify")}
+            onPress={async () => alert((await Notifications.getExpoPushTokenAsync()).data)}
+
           >
             <Text style={{ color: "#8D8E98", fontSize: 18 }}>
               Business users
