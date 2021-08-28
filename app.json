@@ -31,7 +31,13 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.yourcompany.welpieDash",
-      "versionCode": 1
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyAY8XSS7ZyoJ-yYUQL8DVRGZ-Vb-Y7S-3E"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
