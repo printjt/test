@@ -57,7 +57,7 @@ async function checkUpdate() {
 }
 
 export default function App() {
-  //authenticate();
+  authenticate();
   const [token, setToken] = useState("")
 
 
@@ -165,9 +165,6 @@ function DrawerContent() {
         </TouchableOpacity>
         <Text style={{ color: "grey", position: "absolute", bottom: 25 }}>
           {Updates.manifest.version}
-        </Text>
-        <Text style={{ color: "grey", position: "absolute", top: 50 }}>
-          hello
         </Text>
       </View>
     </RootSiblingParent>
