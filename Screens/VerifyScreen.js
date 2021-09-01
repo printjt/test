@@ -17,8 +17,6 @@ import {
 import firebase from "firebase/app";
 import "firebase/firestore";
 import Icons from "react-native-vector-icons/FontAwesome";
-import Collapsible from 'react-native-collapsible';
-import Icon from "react-native-vector-icons/FontAwesome";
 LogBox.ignoreLogs(["Setting a timer"]);
 
 const db = firebase.firestore();
@@ -69,38 +67,27 @@ export default function VerifyScreen({ navigation }) {
   }
 
   function Item({ items }) {
-    const [collapsed, setCollapsed] = useState(true)
-    const [body, setBody] = useState("")
-    const inputRef = useRef()
     return (
       <View style={styles.article}>
-        <TouchableOpacity onPress={() => setCollapsed(!collapsed)}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={{ color: "white" }}>
-              {`${items.name}    isVerified: ${items.verified}`}
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={() => setVerify(items.uid, true, items.token, "Your account has been verified", "Verification")}>
-                <Icons
-                  name="check"
-                  color="green"
-                  size={20}
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setVerify(items.uid, false, items.token, "Your account has been unverified", "Verification")}>
-                <Icons name="close" color="red" size={20} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <Text style={{ color: "grey" }}>{items.email}</Text>
-          <Collapsible collapsed={collapsed} duration={500} style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <TextInput placeholder="Enter custom notification" placeholderTextColor="grey" style={{ color: "white" }} onChangeText={(text) => setBody(text)} ref={inputRef} />
-            <TouchableOpacity>
-              <Icon name="send" color="white" style={{ paddingTop: 10 }} onPress={() => { setVerify(items.uid, true, items.token, body, "Message"); inputRef.current.clear() }} />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ color: "white" }}>
+            {`${items.name}    isVerified: ${items.verified}`}
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity onPress={() => setVerify(items.uid, true, items.token, "Your account has been verified", "Verification")}>
+              <Icons
+                name="check"
+                color="green"
+                size={20}
+                style={{ marginRight: 10 }}
+              />
             </TouchableOpacity>
-          </Collapsible>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={() => setVerify(items.uid, false, items.token, "Your account has been unverified", "Verification")}>
+              <Icons name="close" color="red" size={20} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Text style={{ color: "grey" }}>{items.email}</Text>
       </View>
     );
   }

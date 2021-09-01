@@ -275,61 +275,63 @@ export default function Dashboard({ navigation }) {
               {articleSize}
             </Text>
           </TouchableOpacity>
-          <View style={styles.card}>
-            <Text style={{ color: "#8D8E98", fontSize: 18 }}>Users</Text>
-            <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
-              {userSize + adminSize}
-            </Text>
-            <View style={{ marginBottom: 10 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+          <TouchableOpacity onPress={() => navigation.navigate("Users")}>
+            <View style={styles.card}>
+              <Text style={{ color: "#8D8E98", fontSize: 18 }}>Users</Text>
+              <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
+                {userSize + adminSize}
+              </Text>
+              <View style={{ marginBottom: 10 }}>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "blueviolet",
-                    borderRadius: 5,
-                    marginHorizontal: 5,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
-                />
-                <Text style={{ color: "white" }}>Regular</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      backgroundColor: "blueviolet",
+                      borderRadius: 5,
+                      marginHorizontal: 5,
+                    }}
+                  />
+                  <Text style={{ color: "white" }}>Regular</Text>
+                </View>
                 <View
                   style={{
-                    width: 10,
-                    height: 10,
-                    backgroundColor: "indigo",
-                    borderRadius: 5,
-                    marginHorizontal: 5,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
-                />
-                <Text style={{ color: "white" }}>Business</Text>
+                >
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      backgroundColor: "indigo",
+                      borderRadius: 5,
+                      marginHorizontal: 5,
+                    }}
+                  />
+                  <Text style={{ color: "white" }}>Business</Text>
+                </View>
               </View>
+              <Bar
+                progress={
+                  userSize == 0
+                    ? 0
+                    : userSize / parseInt(`${userSize + adminSize}`)
+                }
+                width={100}
+                color="blueviolet"
+                unfilledColor="indigo"
+                borderColor="black"
+              />
             </View>
-            <Bar
-              progress={
-                userSize == 0
-                  ? 0
-                  : userSize / parseInt(`${userSize + adminSize}`)
-              }
-              width={100}
-              color="blueviolet"
-              unfilledColor="indigo"
-              borderColor="black"
-            />
-          </View>
+          </TouchableOpacity>
         </View>
         <View
           style={{

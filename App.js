@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "./Screens/DashBoard";
 import HomeScreen from "./Screens/Main";
 import VerifyScreen from "./Screens/VerifyScreen";
+import UsersScreen from "./Screens/UsersScreen";
 import { Alert, View, Text, TouchableOpacity } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -111,6 +112,20 @@ export default function App() {
               },
             }}
           />
+          <Stack.Screen
+            name="Users"
+            component={UsersScreen}
+            options={{
+              title: "Users",
+              headerStyle: {
+                backgroundColor: "#17172c",
+              },
+              headerTitleStyle: {
+                fontWeight: "bold",
+                color: "white",
+              },
+              headerTintColor: "white",
+            }} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
