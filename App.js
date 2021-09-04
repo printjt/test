@@ -10,8 +10,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as auth from "expo-local-authentication";
 import * as Updates from "expo-updates";
-import * as Permissions from 'expo-permissions';
-import * as Notifications from 'expo-notifications'
+import * as Permissions from "expo-permissions";
+import * as Notifications from "expo-notifications";
 import Toast from "react-native-root-toast";
 import { RootSiblingParent } from "react-native-root-siblings";
 import * as Network from "expo-network";
@@ -28,41 +28,39 @@ async function authenticate() {
 }
 
 async function checkUpdate() {
+  const net = await Network.getNetworkStateAsync();
+  if (!net.isInternetReachable) {
+    toast.show("No internet", { duration: Toast.durations.SHORT });
+    return true;
+  }
   let toast = Toast.show("Checking", {
     duration: Toast.durations.SHORT,
     backgroundColor: "grey",
   });
-  const net = await Network.getNetworkStateAsync();
-  if (net.isInternetReachable) {
-    const update = await Updates.fetchUpdateAsync();
-    const check = await Updates.checkForUpdateAsync();
-    try {
-      if (check.isAvailable) {
-        Alert.alert("Update available", "", [
-          { text: "Install", onPress: () => Updates.reloadAsync() },
-          {
-            text: "Cancel",
-            onPress: () => console.log("cancel"),
-            style: "cancel",
-          },
-        ]);
-      } else {
-        Alert.alert("Latest version installed");
-      }
-    } catch (e) {
-      console.log(e);
+
+  const update = await Updates.fetchUpdateAsync();
+  const check = await Updates.checkForUpdateAsync();
+  try {
+    if (check.isAvailable) {
+      Alert.alert("Update available", "", [
+        { text: "Install", onPress: () => Updates.reloadAsync() },
+        {
+          text: "Cancel",
+          onPress: () => console.log("cancel"),
+          style: "cancel",
+        },
+      ]);
+    } else {
+      Alert.alert("Latest version installed");
     }
-  } else {
-    Toast.show("No Internet", { duration: Toast.durations.SHORT });
+  } catch (e) {
+    console.log(e);
   }
 }
 
 export default function App() {
   authenticate();
-  const [token, setToken] = useState("")
-
-
-
+  const [token, setToken] = useState("");
 
   return (
     <View style={{ flex: 1, backgroundColor: "#090C21" }}>
@@ -125,11 +123,12 @@ export default function App() {
                 color: "white",
               },
               headerTintColor: "white",
-            }} />
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
-  )
+  );
 }
 
 function DrawerApp() {
@@ -185,4 +184,3 @@ function DrawerContent() {
     </RootSiblingParent>
   );
 }
-
