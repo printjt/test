@@ -3,10 +3,18 @@ import Dashboard from "./Screens/DashBoard";
 import HomeScreen from "./Screens/Main";
 import VerifyScreen from "./Screens/VerifyScreen";
 import UsersScreen from "./Screens/UsersScreen";
-import { Alert, View, Text, TouchableOpacity } from "react-native";
+import { Alert, View, Text, TouchableOpacity, Dimensions } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  NavigationContainer,
+  useNavigation,
+  DrawerActions,
+} from "@react-navigation/native";
+import {
+  createDrawerNavigator,
+  useDrawerStatus,
+} from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as auth from "expo-local-authentication";
 import * as Updates from "expo-updates";
@@ -17,7 +25,7 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import * as Network from "expo-network";
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
+const { height, width } = Dimensions.get("window");
 async function authenticate() {
   const state = await auth.authenticateAsync();
   if (state.success == true) {
@@ -58,7 +66,7 @@ async function checkUpdate() {
   }
 }
 
-export default function App() {
+export default function App({ navigation }) {
   authenticate();
   const [token, setToken] = useState("");
 
@@ -100,14 +108,10 @@ export default function App() {
             name="Drawer"
             component={DrawerApp}
             options={{
-              title: "Welpie Dashboard",
               headerStyle: {
                 backgroundColor: "#17172c",
               },
-              headerTitleStyle: {
-                fontWeight: "bold",
-                color: "white",
-              },
+              headerTitle: () => Header({ navigation }),
             }}
           />
           <Stack.Screen
@@ -138,13 +142,12 @@ function DrawerApp() {
         name="Dash"
         component={Dashboard}
         options={{
-          title: "Welpie Dashboard",
           headerStyle: {
             backgroundColor: "#17172c",
           },
           headerTitleStyle: {
             fontWeight: "bold",
-            color: "white",
+            color: "red",
           },
         }}
       />
@@ -182,5 +185,42 @@ function DrawerContent() {
         </Text>
       </View>
     </RootSiblingParent>
+  );
+}
+
+function Header() {
+  const navigation = useNavigation();
+  const [open, setOpen] = useState(true);
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      <TouchableOpacity
+        onPress={() => {
+          navigation.dispatch(DrawerActions.toggleDrawer());
+          open ? setOpen(false) : setOpen(true);
+        }}
+      >
+        {open ? (
+          <Icon name="menu" size={25} color="white" />
+        ) : (
+          <Icon name="close" size={25} color="white" />
+        )}
+      </TouchableOpacity>
+      <Text
+        style={{
+          color: "white",
+          fontWeight: "bold",
+          fontSize: 20,
+          marginLeft: height / 11,
+        }}
+      >
+        Welpie Dashboard
+      </Text>
+    </View>
   );
 }
