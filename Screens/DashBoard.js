@@ -14,9 +14,8 @@ import {
 } from "react-native";
 import firebase from "firebase/app";
 import "firebase/firestore";
-import * as Notifications from 'expo-notifications'
+import * as Notifications from "expo-notifications";
 import { Bar } from "react-native-progress";
-
 
 const { height, width } = Dimensions.get("window");
 LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -45,6 +44,7 @@ export default function Dashboard({ navigation }) {
   const [tagFashion, setTagFashion] = useState(0);
   const [tagPerfume, setTagPerfume] = useState(0);
   const [tagKitchen, setTagKitchen] = useState(0);
+  const [tagGeneral, setTagGeneral] = useState(0);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [numComments, setNumComments] = useState(0);
@@ -195,14 +195,24 @@ export default function Dashboard({ navigation }) {
         setTagPerfume(Ausers.length);
       });
 
+    const ArticleTagGeneral = db
+      .collection("Articles")
+      .where("tag", "==", "general")
+      .onSnapshot((querySnapshot) => {
+        const Ausers = [];
 
+        querySnapshot.forEach((documentSnapshot) => {
+          Ausers.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
 
+        setTagGeneral(Ausers.length);
+      });
 
     return () => subscriber();
   }, []);
-
-
-
 
   function Card({ title, usersize }) {
     return (
@@ -225,8 +235,6 @@ export default function Dashboard({ navigation }) {
       </View>
     );
   }
-
-
 
   return (
     <ScrollView style={{ height: "100%", backgroundColor: "#090C21" }}>
@@ -278,7 +286,9 @@ export default function Dashboard({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate("Users")}>
             <View style={styles.card}>
               <Text style={{ color: "#8D8E98", fontSize: 18 }}>Users</Text>
-              <Text style={{ color: "white", fontSize: 50, fontWeight: "bold" }}>
+              <Text
+                style={{ color: "white", fontSize: 50, fontWeight: "bold" }}
+              >
                 {userSize + adminSize}
               </Text>
               <View style={{ marginBottom: 10 }}>
@@ -377,7 +387,7 @@ export default function Dashboard({ navigation }) {
           }}
         >
           <Card title="Perfume" usersize={tagPerfume} />
-          <Card title="N/A" usersize="N/A" />
+          <Card title="General" usersize={tagGeneral} />
         </View>
       </View>
     </ScrollView>
